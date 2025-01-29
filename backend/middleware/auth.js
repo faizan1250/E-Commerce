@@ -10,8 +10,9 @@ const authUser = async(req, res, next) => {
     try {
         
         const tokenDecode = jwt.verify(token, process.env.JWT_SECRET)
-        req.body.userId = token_decode.id
+        req.body.userId = tokenDecode.id
         next()
+
     } catch (error) {
         console.log(error)
         res.json({ success : false , message : error.message })
