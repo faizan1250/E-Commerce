@@ -80,17 +80,17 @@ const removeProduct = async(req,res) => {
 }
 
 // PRODUCTS LIST
-const listProduct = async(req,res) => {
+const listProduct = async (req, res) => {
     try {
-
-        const products = await productModel.find({})
-        res.json({ success : true , products})
-        
+        const products = await productModel.find({});
+        console.log("Fetched Products from DB:", products); // Log to check DB response
+        res.json({ success: true, products });
     } catch (error) {
-        console.error(error) ;
-        res.status(500).json({ success : false , message : error.message})
+        console.error(error);
+        res.status(500).json({ success: false, message: error.message });
     }
-}
+};
+    
 
 // SINGLE PRODUCT INFO
 const singleProduct = async(req,res) => {

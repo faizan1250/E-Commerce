@@ -52,7 +52,7 @@ const Collection = () => {
 
     // Apply sub-category filter
     if (subCategory.length > 0) {
-      productscopy = productscopy.filter((item) => subCategory.includes(item.subCategory));
+      productscopy = productscopy.filter((item) => subCategory.includes(item.subcategory));
     }
 
     // Apply sorting

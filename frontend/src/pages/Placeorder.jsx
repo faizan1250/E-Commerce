@@ -32,7 +32,12 @@ const Placeorder = () => {
   }
 
   const onSubmitHandler = async(e) => {
-    e.preventDefault(); // Corrected preventDefault()
+    e.preventDefault(); 
+  
+    console.log("Form submitted");
+    console.log("Form Data:", formData);
+    console.log("Cart Items:", cartItems);
+    console.log("Method:", method);
   
     try {
       let orderItems = [];
@@ -49,36 +54,43 @@ const Placeorder = () => {
           }
         }
       }
-      
+  
       let orderData = {
         address : formData,
         items : orderItems,
         amount : getCartAmount() + delivery_fee,
-
-      }
-
+      };
+  
+      console.log("Order Data:", orderData);
+  
       switch (method) {
-        case 'cod':
-          const response = await axios.post('http://localhost:3000/api/order/cod',orderData ,{headers:{token}});
-          console.log(response.data.success)
-          
+        case 'COD':
+          const response = await axios.post('http://localhost:3000/api/order/cod', orderData, 
+            { headers:{ token }}
+          );
+          console.log("Response Data:", response.data);
+  
           if(response.data.success){
-            setCartItems({})
-            navigate('/orders')
-          }else{
-            toast.error(response.data.message)
+            setCartItems({});
+            navigate('/orders');
+            toast.success('Order placed successfully!');
+            console.log('order placed')
+          } else {
+            toast.error(response.data.message);
+            console.log("error")
           }
           break;
-      
+  
         default:
           break;
       }
-  
     } catch (error) {
-      console.log(error)
-      toast.error(error.message)
+      console.log("Error:", error);
+      toast.error(error.message);
     }
   };
+  ;
+  
   
   
   return (
@@ -124,10 +136,10 @@ const Placeorder = () => {
           {/* PAYMENT MEETHOD SECTION */}
           <div className='flex gap-3 flex-col lg:flex-row'>
 
-            <div onClick={()=> setMethod("STRIPE")} className='flex items-center gap-3 border p-2 px-3 cursor-pointer'>
+            {/* <div onClick={()=> setMethod("STRIPE")} className='flex items-center gap-3 border p-2 px-3 cursor-pointer'>
               <p className={`min-w-3.5 h-3.5  border rounded-full ${method === 'STRIPE' ? 'bg-green-600' : ""}`}></p>
               <img src={assets.stripe_logo} className='h-5 mx-4' alt="" srcset="" />
-            </div>
+            </div> */}
 
             <div onClick={()=> setMethod("RAZOR")} className='flex items-center gap-3 border p-2 px-3 cursor-pointer'>
               <p className={`min-w-3.5 h-3.5  border rounded-full ${method === 'RAZOR' ? 'bg-green-600' : ""}`}></p>

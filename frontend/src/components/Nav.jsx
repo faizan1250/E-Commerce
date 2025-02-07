@@ -17,7 +17,7 @@ const Nav = () => {
     }
 
   return (
-    <div className='flex items-center justify-between py-3 font-medium'>
+    <div className='flex items-center justify-between py-3 font-medium min-w-[358px]'>
 
          <Link to='/'>
         <img src={assets.logo} className='w-36' alt="" srcset="" />

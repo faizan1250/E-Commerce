@@ -8,7 +8,7 @@ import Footer from '../components/Footer'
 
 const Home = () => {
   return (
-    <div>
+    <div className='min-w-[358px]'>
       <Hero/>
       <LatestCollection/>
       <Bestseller/>

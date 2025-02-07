@@ -40,7 +40,7 @@ const Product = () => {
             }
           </div>
           {/* main image */}
-          <div className='w-full sm:w-[80%]'>
+          <div className='w-full sm:w-[80%] '>
             <img src={image} className='w-full h-auto' alt="" srcset="" />
           </div>
         </div>

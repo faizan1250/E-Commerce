@@ -2,10 +2,10 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 
 // ORDER THROUGH COD
-const placeOrderCod = async(res,req) => {
+const placeOrderCod = async(req,res) => {
     try {
         // TAKING INFORMATION FROM USER
-        const{ userId, items, amount, address} = req.body ;
+        const{ userId, items, amount, address, date} = req.body ;
     
         // SENDINF INFO OF USER AS AN OBJECT TO DB AS PER DB MODEL
         const orderData = {
@@ -15,7 +15,7 @@ const placeOrderCod = async(res,req) => {
             address,
             paymentMethod : "COD",
             payment : false,
-            Date : Date.now()        
+            date : Date.now()        
         }
     
         // CREATING NEW ORDER
@@ -33,28 +33,54 @@ const placeOrderCod = async(res,req) => {
 }
 
 // ORDER THROUGH STRIPE
-const placeOrderStripe = async(res,req) => {
+const placeOrderStripe = async(req,res) => {
 
 }
 
 // ORDER THROUGH RAZORPAY
-const placeOrderRazorpay = async(res,req) => {
+const placeOrderRazorpay = async(req,res) => {
 
 }
 
 // ORDER FOR ADMIN PANEL
-const allOrders = async(res,req) => {
+const allOrders = async(req,res) => {
+    try {
 
+        const orders = await orderModel.find({ });
+        res.json({ success : true , orders})
+    
+    } catch (error) {
+        console.log(error)
+        res.json({ success:false , message: error.message})
+    }
 }
 
 // ORDER FOR FRONTEND
-const userOrder = async(res,req) => {
+const userOrder = async(req,res) => {
+try {
+    const { userId } = req.body
 
+    const orders = await orderModel.find({ userId });
+    res.json({ success : true , orders})
+
+} catch (error) {
+    console.log(error)
+    res.json({ success:false , message: error.message})
+}
 }
 
 // UPDATE ORDER STATUS from admin panel
-const updateStatus = async(res,req) => {
+const updateStatus = async(req,res) => {
+try {
+    const{ orderId, status} = req.body ;
 
+     await orderModel.findByIdAndUpdate(orderId, { status })
+    res.json({ success : true , message:"Status updated"})
+    
+} catch (error) {
+    console.log(error)
+    res.json({ success:false, message: error.message})
+}
 }
 
 export { placeOrderCod, placeOrderRazorpay, placeOrderStripe, allOrders, userOrder, updateStatus}
